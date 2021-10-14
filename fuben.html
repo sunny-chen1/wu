@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			#t1{
+				position: relative;
+			}
+			.info{
+				position: absolute;
+				border: 2px solid orange;
+				border-radius: 10px;
+				margin: 0;
+				padding: 15px;
+				background-color: gold;
+				width: 200px;
+				display: none;
+			}
+			.link{
+				position: fixed;
+				top: 10px;
+				right: 100px;
+			}
+			.login{
+				border: 1px solid;
+				width: 200px;
+				height: 200px;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -100px;
+				margin-top: -100px;
+				display: none;
+				background-color: #F5F5F5;
+			}
+			.close{
+				position: absolute;
+				top: 0;
+				right: 5px;
+				cursor: pointer;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				display: flex;
+				width: 450px;
+				padding: 10px 0;
+				justify-content: space-around;
+			}
+			img{
+				display: block;
+			}
+			li{
+				width: 22%;
+			}
+			li img{
+				width: 100%;
+				height: 100px;
+			}
+			li .active{
+				border:2px solid #0000FF;
+			}
+			.eye{
+				background: url(images/eyenone.png);
+				display: inline-block;
+				height: 25px;
+				width: 25px;
+				vertical-align: middle; /* 垂直居中 */
+				cursor: pointer;
+			}
+			.eye.on{
+				background: url(images/eyesee.png);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="t1">
+			<input type="checkbox" id="box">十天内免登录
+			<p class="info">隐藏的信息隐藏的信息隐藏的信息隐藏的信息隐藏的信息隐藏的信息隐藏的信息隐藏的信息</p>
+		</div>
+		<div id="t2">
+			<a href="javascript:;" class="link">登录</a>
+			<div class="login">
+				<span class="close">&times;</span>
+			</div>
+		</div>
+		<div id="t3">
+			<input type="text" value="搜索" class="search">
+		</div>
+		<div id="t4">
+			<img src="images/1.png" alt="大图片" class="big">
+			<ul>
+				<li><img src="images/1.png" alt="1" class="small active"></li>
+				<li><img src="images/2.png" alt="2" class="small"></li>
+				<li><img src="images/3.png" alt="3" class="small"></li>
+				<li><img src="images/4.png" alt="4" class="small"></li>
+			</ul>
+		</div>
+		<div id="t5">
+			<input type="password" class="pwd" value="">
+			<i class="eye"></i>
+		</div>
+		<br>
+		<script>
+			// 第一题
+			let box=document.querySelector('#box');
+			let info=document.querySelector('.info');
+			// box.onmousemove=function(){
+			// 	info.style.display='block';
+			// }
+			box.addEventListener('mouseover',function(){
+				info.style.display='block';
+			});
+			// box.onmouseout=function(){
+			// 	info.style.display='none';
+			// }
+			box.addEventListener('mouseout',function(){
+				info.style.display='none';
+			});
+			// 第二题
+			let link=document.querySelector('.link');
+			let login=document.querySelector('.login');
+			let close=document.querySelector('.close');
+			link.addEventListener('click',function(){
+				login.style.display='block';
+			});
+			close.addEventListener('click',function(){
+				login.style.display='none';
+			});
+			//第三题
+			let search=document.querySelector('.search');
+			let oldValue=search.value;
+			search.addEventListener('focus',function(){ //鼠标点击输入框时用获得焦点
+				if(this.value===oldValue){ //if(内容为默认内容){内容清空}  this 当前发生事件的元素
+					this.value='';
+				}
+			});
+			search.addEventListener('blur',function(){//blur失去焦点
+				if(this.value===''){// if(内容为空){内容为默认内容}
+					this.value=oldValue;
+				}
+			});
+			//第四题
+			let big=document.querySelector('.big');
+			let smalls=document.querySelectorAll('.small');
+			for(let i=0;i<smalls.length;i++){
+				// console.log(i);//在控制台输出i的值
+				smalls[i].addEventListener('mousemove',function(){
+					// console.log(this.src)在控制台输出图片的地址
+					big.src=this.src;//this当前鼠标划过的图片
+					
+					// 全清 无条件全体清楚
+					for(let j=0;j<smalls.length;j++){
+						smalls[j].classList.remove('active');
+					}
+					//单设 单独设置
+					this.classList.add('active');//this当前鼠标划过的图片
+					
+				});
+			}
+			//第五题
+			let pwd=document.querySelector('.pwd');
+			let eye=document.querySelector('.eye');
+			eye.addEventListener('click',function(){
+				//方法一：
+				this.classList.toggle('on')
+				if(this.classList.contains('on')){
+					pwd.type='text';
+				}else{
+					pwd.type='password';
+				}
+				//方法二：
+				// this.classList.toggle('on')
+				// if(pwd.type==='password'){
+				// pwd.type='text';
+				// }else{
+				// 	pwd.type='password';
+				// }
+				//方法三：
+				// if(pwd.type==='password'){
+				// pwd.type='text';
+				// this.classList.add('on');
+				// }else{
+				// 	pwd.type='password';
+				// 	this.classList.remove('on');
+				// }
+			});
+		</script>
+	</body>
+</html>
